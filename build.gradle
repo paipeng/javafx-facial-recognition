@@ -1,0 +1,53 @@
+
+plugins {
+    id 'java-library'
+    id 'application'
+}
+
+group 'com.paipeng'
+version '1.0-SNAPSHOT'
+
+repositories {
+    maven{url 'https://maven.aliyun.com/nexus/content/repositories/central/'}
+    maven {
+        url 'https://oss.sonatype.org/content/repositories/snapshots'
+    }
+}
+
+
+
+javadoc {
+    options.addStringOption('encoding', 'UTF-8')
+}
+compileJava.options.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+
+dependencies {
+    api fileTree(dir: 'libs', include: ['*.jar'])
+
+    api group: 'com.github.sarxos', name: 'webcam-capture', version: '0.3.13-SNAPSHOT'
+    api group: 'com.github.sarxos', name: 'webcam-capture-driver-openimaj', version: '0.3.13-SNAPSHOT'
+
+    // https://mvnrepository.com/artifact/net.java.dev.jna/jna
+    implementation group: 'net.java.dev.jna', name: 'jna', version: '5.10.0'
+
+    // https://mvnrepository.com/artifact/javax.usb/usb-api
+    api group: 'javax.usb', name: 'usb-api', version: '1.0.2'
+    // https://mvnrepository.com/artifact/org.usb4java/usb4java-javax
+    api group: 'org.usb4java', name: 'usb4java-javax', version: '1.3.0'
+
+
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.22'
+    implementation group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.22'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+}
+
+test {
+    useJUnitPlatform()
+}
